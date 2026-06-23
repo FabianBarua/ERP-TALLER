@@ -18,7 +18,7 @@ dotenv.config();
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = parseInt(process.env.PORT || "3000", 10);
 
   // Probar conexión a Postgres
   await testConnection();
@@ -170,21 +170,25 @@ async function startServer() {
     res.json({ status: "online", time: new Date().toISOString() });
   });
 
-  // Setup Vite development server or serve built assets in production
-  if (process.env.NODE_ENV !== "production") {
-    console.log("Loading Vite Dev Middleware...");
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-  } else {
-    console.log("Serving static production built assets from /dist...");
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
+  // En Docker split (API_ONLY), el front va en nginx y solo corre la API aquí
+  const apiOnly = process.env.API_ONLY === "true";
+
+  if (!apiOnly) {
+    if (process.env.NODE_ENV !== "production") {
+      console.log("Loading Vite Dev Middleware...");
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: "spa",
+      });
+      app.use(vite.middlewares);
+    } else {
+      console.log("Serving static production built assets from /dist...");
+      const distPath = path.join(process.cwd(), "dist");
+      app.use(express.static(distPath));
+      app.get("*", (req, res) => {
+        res.sendFile(path.join(distPath, "index.html"));
+      });
+    }
   }
 
   app.listen(PORT, "0.0.0.0", () => {
