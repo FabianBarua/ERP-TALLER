@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+html[data-theme="oscuro"] {
+  filter: invert(0.92) hue-rotate(180deg);
+  background: #111111;
+}
+
+html[data-theme="oscuro"] img,
+html[data-theme="oscuro"] video,
+html[data-theme="oscuro"] aside,
+html[data-theme="oscuro"] .bg-slate-900,
+html[data-theme="oscuro"] .bg-slate-800,
+html[data-theme="oscuro"] .bg-slate-950,
+html[data-theme="oscuro"] .bg-slate-900\/60,
+html[data-theme="oscuro"] .bg-slate-900\/40,
+html[data-theme="oscuro"] .bg-slate-800\/80 {
+  filter: invert(1.08) hue-rotate(180deg);
+}
+
+html[data-theme="oscuro"] aside * {
+  /* Prevent further inversions inside the aside */
+  filter: none !important;
+}
+
+html[data-theme="minimalista"] {
+  filter: grayscale(1);
+}
+
+html[data-theme="minimalista"] * {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+@media print {
+  /* Hide the rest of the application interface entirely */
+  body > div,
+  body > main,
+  body > section,
+  nav,
+  header,
+  aside,
+  footer,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Force printable sheet to span the full page with high-contrast text rendering */
+  body,
+  html {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #printable_work_order_sheet,
+  #printable_receipt {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .block-print-hide {
+    display: none !important;
+  }
+
+  /* Double-ensure signature spaces align at the bottom cleanly */
+  #printable_work_order_sheet tr {
+    page-break-inside: avoid;
+  }
+}
