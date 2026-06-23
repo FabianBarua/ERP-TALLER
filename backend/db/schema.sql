@@ -114,11 +114,19 @@ CREATE TABLE IF NOT EXISTS usuarios (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
--- Usuario administrador por defecto (contraseña: admin1234)
+-- Usuarios administradores por defecto (contraseña: admin)
+INSERT INTO usuarios (nombre, email, password_hash, rol)
+VALUES (
+  'Administrador',
+  'admin',
+  '$2b$10$R9hbyuCshZ42QG9P5y7p/OQ3Kovz/LqG0LqZ2R5M3T6h/0N2S4U3.',
+  'admin'
+) ON CONFLICT (email) DO NOTHING;
+
 INSERT INTO usuarios (nombre, email, password_hash, rol)
 VALUES (
   'Administrador',
   'admin@taller.com',
-  '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+  '$2b$10$R9hbyuCshZ42QG9P5y7p/OQ3Kovz/LqG0LqZ2R5M3T6h/0N2S4U3.',
   'admin'
 ) ON CONFLICT (email) DO NOTHING;

@@ -550,7 +550,7 @@ export default function App() {
                     required
                     value={loginUser}
                     onChange={(e) => setLoginUser(e.target.value)}
-                    placeholder="admin@taller.com"
+                    placeholder="admin"
                     className="w-full text-xs pl-8 pr-3 py-3 border border-slate-200 rounded-xl bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
                   />
                 </div>
@@ -577,7 +577,7 @@ export default function App() {
             </form>
             <div className="pt-4 border-t border-slate-100 text-center">
               <span className="text-[10px] font-mono font-semibold text-slate-400 block">
-                CREDENCIALES DEMO: admin@taller.com / admin1234
+                CREDENCIALES DEMO: admin / admin
               </span>
             </div>
           </div>
